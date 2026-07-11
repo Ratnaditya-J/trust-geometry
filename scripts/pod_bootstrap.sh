@@ -13,7 +13,6 @@ git checkout -B "$BRANCH" >/dev/null 2>&1 || true
 
 heartbeat() {  # $1 = stage label
   echo "$(date -u +%H:%M:%S) STAGE=$1" | tee -a results/heartbeat.txt
-  cp /workspace/boot.log results/boot.log 2>/dev/null || true
   git add -A results/ >/dev/null 2>&1 || true
   git commit -q -m "hb: $1" >/dev/null 2>&1 || true
   git push -f "$REMOTE" "$BRANCH" >/dev/null 2>&1 || true
