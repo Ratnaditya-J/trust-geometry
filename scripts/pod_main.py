@@ -32,6 +32,7 @@ def self_terminate():
 def main():
     gh.ensure_branch("r0-run")
     hb("STARTED", os.uname().nodename)
+    hb("PIP_INSTALLING")
     # GPU check
     try:
         import torch
@@ -54,7 +55,7 @@ def main():
                             stderr=subprocess.STDOUT)
     t0 = time.time()
     while proc.poll() is None:
-        time.sleep(45)
+        time.sleep(12)
         tail = ""
         if os.path.exists(logf):
             tail = open(logf).read()[-400:]
