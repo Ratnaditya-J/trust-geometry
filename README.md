@@ -21,5 +21,9 @@ pass/fail bright lines.
 - `data/neutral_c4.jsonl` — fixed 320-sequence C4 neutral-text sample (reproducible).
 
 ## Status
-R0 (foundation + gates + CLAIM-2 geometry) implemented and validated end-to-end on
-mock activations; first gpt-oss-20b run in progress.
+R0 completed on gpt-oss-20b on 2026-07-11. Role is strongly decodable and the
+controlled centroids are unusually low-dimensional, but the preregistered ordered
+authority scale fails: the 1-D ordered classifier reaches 0.442 versus 0.989 for the
+multinomial probe, and PC1 does not recover the hypothesized role order. See
+[`results/R0_SUMMARY.md`](results/R0_SUMMARY.md). R1's causal authority-vs-compliance
+discriminant is next.

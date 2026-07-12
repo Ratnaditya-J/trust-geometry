@@ -1,6 +1,6 @@
 # trust-geometry — Project Summary & Status
 
-_Last updated: 2026-07-11._
+_Last updated: 2026-07-11 after the first successful GPU run._
 
 ---
 
@@ -78,18 +78,18 @@ Key conclusions that shaped the plan:
 
 ---
 
-## 4. What we built — and validated (no GPU needed)
+## 4. What we built and validated
 
-All pushed to `main`. The science/analysis layer is **unit-tested on synthetic ground
-truth**; only the actual gpt-oss-20b forward pass is outstanding.
+The science/analysis layer was unit-tested on synthetic ground truth, then R0 was run
+successfully on gpt-oss-20b on an H100.
 
 | File | What it is | Status |
 |------|-----------|--------|
 | `data/neutral_c4.jsonl` | Fixed 320-seq C4 neutral-text sample (reproducible) | ✅ built |
 | `src/trust_geometry/harmony_roles.py` | Tag-controlled role corpus in gpt-oss **native harmony format**, content positions matched across roles (the paper's positional control), byte-exact content spans; + harmony parser | ✅ tested |
 | `src/trust_geometry/analysis.py` | 5-way role probes (grouped CV), **3 gates** (logit-baseline anti-circularity, random-marker artifact, zero-shot generalization), and the **CLAIM-2 ordered-scale geometry battery** (participation ratio vs random-centroid null, ordinal-vs-multinomial, recovered order) | ✅ unit-tested: correctly labels an ordered-line arrangement "one axis" and orthogonal clusters "bundle" |
-| `src/trust_geometry/extract.py` | GPU activation / logit-feature extraction + real-conversation generation | ✅ written (not yet GPU-run) |
-| `scripts/run_r0.py` | R0 + geometry driver | ✅ wiring smoke-tested on mock activations |
+| `src/trust_geometry/extract.py` | GPU activation / logit-feature extraction + real-conversation generation | ✅ GPU-run |
+| `scripts/run_r0.py` | R0 + geometry driver | ✅ completed on gpt-oss-20b |
 | `scripts/pod_main.py`, `src/trust_geometry/github_io.py` | Pure-Python pod entrypoint + GitHub-API results channel (heartbeats/results, no git/apt on pod) | ✅ written |
 | `prereg/PREREGISTRATION.md` | Frozen thesis, claims, ladder, bright-line pass/fail criteria | ✅ |
 | `README.md` | Overview | ✅ |
@@ -100,11 +100,9 @@ its harmony format routes a user "system" prompt to the `developer` role while t
 
 ---
 
-## 5. The GPU-run attempt (honest post-mortem)
+## 5. GPU run: infrastructure post-mortem and R0 result
 
-The R0 pipeline was **never successfully run on a GPU** — not because of the science,
-but because of **container-launch plumbing**. Six RunPod attempts, each a distinct,
-now-diagnosed infra bug:
+Six earlier RunPod attempts failed because of container-launch plumbing:
 
 1. Image entrypoint (Jupyter/SSH) swallowed the start command → pod idle 50 min.
 2. Official image had no `/workspace` dir + `set -e` → instant crash-loop.
@@ -114,26 +112,48 @@ now-diagnosed infra bug:
 6. Fixed (`bash → base64 → python3`, cached RunPod image) but **killed before verifying**
    at the user's (correct) instruction to stop burning money.
 
-**Cost:** ~$3–4 wasted, almost all from attempt #1's 50-minute silent pod. **All pods
-terminated; nothing billing.**
+On 2026-07-11, the required cheap launch validation passed on an A40, followed by a
+successful full H100 R0 run. One H100 bootstrap retry was needed because the image's
+Debian-installed `cryptography` package had no pip RECORD; installing it once with
+`--ignore-installed` fixed the environment. The successful R0 driver completed in
+570 seconds. All pods were terminated after artifact retrieval; nothing is billing.
 
 **Process lesson (the real mistake):** repeatedly attached an **expensive H100 to debug
 a launch mechanism**. Should have validated "can a cheap container run my code and
 report back" on a near-free instance in ~2 minutes *before* ever touching a 20B model.
-The known-good recipe now: **RunPod cached image + `bash`→`python3` + pure-Python
-GitHub-API results channel + heartbeat-as-liveness watchdog.**
+The known-good recipe is: **RunPod cached image + `bash` to base64-decoded `python3`
+plus HTTP status/artifact channel + hard self-termination watchdog.**
+
+### R0 result
+
+- Best five-way role probe: **0.9888** at layer 16 (chance 0.20).
+- Logit-baseline gate: **pass** (hidden 0.9888 vs logits 0.3680).
+- Random-marker gate: **pass** (real 0.9888 vs marker 0.7808).
+- Natural-conversation zero-shot accuracy: **0.5729** over 96 spans.
+- Geometry is strongly low-dimensional: participation ratio **1.1909** and PC1
+  variance **0.9142**, both far outside the random-centroid null.
+- **CLAIM 2's preregistered ordered-scale test fails:** ordered accuracy 0.4416 vs
+  multinomial 0.9888; recovered order `user, tool, system, cot, assistant` does not
+  match `system, assistant, cot, user, tool` in either orientation.
+
+Interpretation: R0 finds a strongly decodable, unusually low-dimensional role
+structure, but not the claimed ordered authority scale. Calling PC1 an authority or
+trust axis would be premature. Full metrics and hashes are in
+`results/R0_SUMMARY.md` and `results/r0_results.json`.
 
 ---
 
 ## 6. What's pending
 
-**Immediate (R0 — the first real result):**
-- Run the built pipeline on gpt-oss-20b. Gated by a **2-minute cheap launch validation**
-  first (pennies), then attach an H100.
-- R0 output: per-layer probe accuracy (layer sweep), the 3 gates, and the **CLAIM-2
-  verdict** — do the 5 role centroids collapse onto one ordered authority axis (success)
-  or form a bundle (fallback)? This directly adjudicates against the *Who is In Charge?*
-  distinct-subspaces prior.
+**Immediate (R1 — the discriminant decision gate):**
+- Build the matched source-conflict/no-conflict behavioral suite.
+- Construct candidate layer-16 directions without relabeling PC1 after seeing the
+  outcome: preregistered ordinal contrast, unsupervised PC1, generic compliance, and
+  refusal, plus random/orthogonal/wrong-layer controls.
+- Test whether steering changes which source wins under conflict while leaving
+  no-conflict task completion and coherence intact.
+- Measure cosine and orthogonalized transfer against compliance and refusal.
+- **Fail R1 -> stop:** the low-dimensional role signal is not authority-specific.
 
 **Then the ladder (`prereg/PREREGISTRATION.md`), cheapest-fatal-first:**
 - **R1 — Discriminant (decision gate):** authority ≠ generic compliance/refusal —
@@ -153,4 +173,5 @@ elicits/measures these; `exit-friction` is a reusable crossed-design template an
 points to external jailbreak corpora, but these are net-new builds and are the true gate
 on the unification claim.
 
-**Infra to-do before resuming:** the cheap launch-validation step, then the H100 R0 run.
+**Infra status:** launch validation and the H100 path are proven. Reuse the HTTP
+status/artifact channel and the `cryptography --ignore-installed` bootstrap repair.
