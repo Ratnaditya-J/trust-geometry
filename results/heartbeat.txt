@@ -1,2 +1,3 @@
 02:11:11 STAGE=STARTED 46d4ce4ab29e stage=R1 branch=r1-validation
 02:11:13 STAGE=PIP_INSTALLING
+02:11:17 STAGE=GPU_OK torch=2.9.1+cu128 cuda=True NVIDIA A40
