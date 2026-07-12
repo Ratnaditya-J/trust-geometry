@@ -1,40 +1,34 @@
 [transformers] `torch_dtype` is deprecated! Use `dtype` instead!
 [transformers] MXFP4 quantization requires the `kernels` package: `pip install kernels>=0.12.0`. We will default to dequantizing the model to bf16.
-Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:07<00:15,  7.87s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:11<00:05,  5.56s/it]Fetching 3 files: 100%|██████████| 3/3 [00:11<00:00,  3.94s/it]
-Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 2/411 [00:00<00:48,  8.50it/s]Loading weights:   1%|          | 5/411 [00:00<00:34, 11.66it/s]Loading weights:   2%|▏         | 7/411 [00:00<00:40, 10.00it/s]Loading weights:   5%|▌         | 22/411 [00:00<00:10, 36.12it/s]Loading weights:   7%|▋         | 27/411 [00:00<00:10, 36.71it/s]Loading weights:   9%|▉         | 39/411 [00:01<00:07, 48.74it/s]Loading weights:  11%|█         | 45/411 [00:01<00:08, 42.80it/s]Loading weights:  14%|█▎        | 56/411 [00:01<00:07, 48.82it/s]Loading weights:  15%|█▌        | 62/411 [00:01<00:07, 45.68it/s]Loading weights:  18%|█▊        | 75/411 [00:01<00:07, 45.27it/s]Loading weights:  22%|██▏       | 90/411 [00:02<00:06, 52.67it/s]Loading weights:  26%|██▌       | 107/411 [00:02<00:04, 72.02it/s]Loading weights:  47%|████▋     | 192/411 [00:02<00:00, 221.81it/s]Loading weights:  67%|██████▋   | 277/411 [00:02<00:00, 354.23it/s]Loading weights:  88%|████████▊ | 362/411 [00:02<00:00, 465.28it/s]Loading weights: 100%|██████████| 411/411 [00:02<00:00, 155.30it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:08<00:16,  8.02s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:10<00:04,  4.68s/it]Fetching 3 files: 100%|██████████| 3/3 [00:10<00:00,  3.45s/it]
+Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 1/411 [00:00<02:09,  3.17it/s]Loading weights:   1%|          | 5/411 [00:00<00:39, 10.25it/s]Loading weights:   2%|▏         | 7/411 [00:00<00:36, 11.18it/s]Loading weights:   5%|▌         | 22/411 [00:00<00:10, 37.75it/s]Loading weights:   7%|▋         | 27/411 [00:01<00:11, 34.35it/s]Loading weights:  10%|▉         | 41/411 [00:01<00:08, 42.23it/s]Loading weights:  14%|█▎        | 56/411 [00:01<00:06, 54.90it/s]Loading weights:  15%|█▌        | 62/411 [00:01<00:06, 51.03it/s]Loading weights:  18%|█▊        | 73/411 [00:01<00:06, 55.59it/s]Loading weights:  19%|█▉        | 79/411 [00:01<00:06, 49.46it/s]Loading weights:  22%|██▏       | 90/411 [00:02<00:06, 52.52it/s]Loading weights:  23%|██▎       | 96/411 [00:02<00:06, 46.67it/s]Loading weights:  30%|███       | 124/411 [00:02<00:03, 91.46it/s]Loading weights:  51%|█████     | 209/411 [00:02<00:00, 253.33it/s]Loading weights:  72%|███████▏  | 294/411 [00:02<00:00, 389.00it/s]Loading weights:  92%|█████████▏| 379/411 [00:02<00:00, 498.07it/s]Loading weights: 100%|██████████| 411/411 [00:02<00:00, 147.78it/s]
 model loaded 24 layers
 role activations (500, 2880)
 FATAL:
 Traceback (most recent call last):
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 316, in <module>
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 317, in <module>
     main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 275, in main
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 276, in main
     centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 125, in _directions
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 126, in _directions
     harmless = _last_prompt_activations(tok, model, [pair[0] for pair in HARMFUL_HARMLESS])
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 80, in _last_prompt_activations
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 81, in _last_prompt_activations
     ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 72, in _prompt_ids
-    )[0].tolist()
-         ^^^^^^
-AttributeError: 'tokenizers.Encoding' object has no attribute 'tolist'
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many dimensions 'str'
 
 Traceback (most recent call last):
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 316, in <module>
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 317, in <module>
     main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 275, in main
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 276, in main
     centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 125, in _directions
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 126, in _directions
     harmless = _last_prompt_activations(tok, model, [pair[0] for pair in HARMFUL_HARMLESS])
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 80, in _last_prompt_activations
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 81, in _last_prompt_activations
     ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 72, in _prompt_ids
-    )[0].tolist()
-         ^^^^^^
-AttributeError: 'tokenizers.Encoding' object has no attribute 'tolist'
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many dimensions 'str'
