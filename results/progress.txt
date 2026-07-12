@@ -1,4 +1,10 @@
 stage=R1
-elapsed=25s
+elapsed=42s
 
-...
+...ring.py", line 43, in mean_difference
+    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
+    raise ValueError("direction has zero or non-finite norm")
+ValueError: direction has zero or non-finite norm
+
