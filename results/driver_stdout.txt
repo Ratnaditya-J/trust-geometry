@@ -1,38 +1,40 @@
 [transformers] `torch_dtype` is deprecated! Use `dtype` instead!
 [transformers] MXFP4 quantization requires the `kernels` package: `pip install kernels>=0.12.0`. We will default to dequantizing the model to bf16.
-Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:08<00:16,  8.21s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:12<00:06,  6.14s/it]Fetching 3 files: 100%|██████████| 3/3 [00:12<00:00,  4.30s/it]
-Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 2/411 [00:00<00:50,  8.18it/s]Loading weights:   1%|          | 5/411 [00:00<00:35, 11.41it/s]Loading weights:   2%|▏         | 7/411 [00:00<00:38, 10.38it/s]Loading weights:   5%|▌         | 22/411 [00:00<00:10, 37.65it/s]Loading weights:   7%|▋         | 27/411 [00:00<00:10, 35.05it/s]Loading weights:   9%|▉         | 39/411 [00:01<00:07, 49.26it/s]Loading weights:  11%|█         | 45/411 [00:01<00:07, 46.12it/s]Loading weights:  14%|█▎        | 56/411 [00:01<00:06, 53.79it/s]Loading weights:  15%|█▌        | 62/411 [00:01<00:06, 50.71it/s]Loading weights:  18%|█▊        | 73/411 [00:01<00:05, 57.44it/s]Loading weights:  19%|█▉        | 79/411 [00:01<00:06, 55.17it/s]Loading weights:  22%|██▏       | 90/411 [00:01<00:05, 63.77it/s]Loading weights:  30%|███       | 124/411 [00:02<00:02, 125.57it/s]Loading weights:  51%|█████     | 209/411 [00:02<00:00, 301.78it/s]Loading weights:  72%|███████▏  | 294/411 [00:02<00:00, 438.59it/s]Loading weights:  92%|█████████▏| 379/411 [00:02<00:00, 535.48it/s]Loading weights: 100%|██████████| 411/411 [00:02<00:00, 167.96it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:14<00:28, 14.37s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:15<00:06,  6.52s/it]Fetching 3 files: 100%|██████████| 3/3 [00:16<00:00,  3.88s/it]Fetching 3 files: 100%|██████████| 3/3 [00:16<00:00,  5.38s/it]
+Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 1/411 [00:01<09:51,  1.44s/it]Loading weights:   0%|          | 2/411 [00:03<10:36,  1.56s/it]Loading weights:   1%|          | 4/411 [00:03<04:18,  1.58it/s]Loading weights:   1%|          | 5/411 [00:04<05:17,  1.28it/s]Loading weights:   2%|▏         | 7/411 [00:05<04:54,  1.37it/s]Loading weights:   5%|▌         | 22/411 [00:07<01:15,  5.15it/s]Loading weights:   6%|▌         | 24/411 [00:08<01:56,  3.31it/s]Loading weights:   9%|▉         | 39/411 [00:10<01:04,  5.81it/s]Loading weights:  10%|▉         | 41/411 [00:11<01:20,  4.60it/s]Loading weights:  14%|█▎        | 56/411 [00:13<01:00,  5.88it/s]Loading weights:  14%|█▍        | 58/411 [00:14<01:14,  4.75it/s]Loading weights:  18%|█▊        | 73/411 [00:15<00:50,  6.66it/s]Loading weights:  18%|█▊        | 75/411 [00:17<01:05,  5.15it/s]Loading weights:  22%|██▏       | 90/411 [00:18<00:45,  7.01it/s]Loading weights:  31%|███       | 126/411 [00:18<00:15, 17.91it/s]Loading weights:  51%|█████▏    | 211/411 [00:18<00:03, 53.00it/s]Loading weights:  72%|███████▏  | 296/411 [00:18<00:01, 98.03it/s]Loading weights:  93%|█████████▎| 381/411 [00:18<00:00, 153.93it/s]Loading weights: 100%|██████████| 411/411 [00:18<00:00, 21.65it/s] 
 model loaded 24 layers
 role activations (500, 2880)
-FATAL:
-Traceback (most recent call last):
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 313, in <module>
-    main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 272, in main
-    centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
-                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 124, in _directions
-    refusal = mean_difference(harmful, harmless)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 43, in mean_difference
-    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
-    raise ValueError("direction has zero or non-finite norm")
-ValueError: direction has zero or non-finite norm
-
-Traceback (most recent call last):
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 313, in <module>
-    main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 272, in main
-    centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
-                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 124, in _directions
-    refusal = mean_difference(harmful, harmless)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 43, in mean_difference
-    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
-    raise ValueError("direction has zero or non-finite norm")
-ValueError: direction has zero or non-finite norm
+direction cos ordinal/compliance 0.06626360321400794
+direction cos ordinal/refusal -0.07460983326836318
+suite cases 144 conflicts 72
+matrix ordinal scale 56.5134
+matrix progress ordinal 0 / 144
+matrix progress ordinal 48 / 144
+matrix progress ordinal 96 / 144
+matrix pc1 scale 293.4848
+matrix progress pc1 0 / 144
+matrix progress pc1 48 / 144
+matrix progress pc1 96 / 144
+matrix ordinal_orthogonalized scale 56.0388
+matrix progress ordinal_orthogonalized 0 / 144
+matrix progress ordinal_orthogonalized 48 / 144
+matrix progress ordinal_orthogonalized 96 / 144
+matrix compliance scale 59.5362
+matrix progress compliance 0 / 144
+matrix progress compliance 48 / 144
+matrix progress compliance 96 / 144
+matrix refusal scale 46.3247
+matrix progress refusal 0 / 144
+matrix progress refusal 48 / 144
+matrix progress refusal 96 / 144
+matrix random scale 16.0411
+matrix progress random 0 / 144
+matrix progress random 48 / 144
+matrix progress random 96 / 144
+matrix wrong_layer scale 56.5134
+matrix progress wrong_layer 0 / 144
+matrix progress wrong_layer 48 / 144
+matrix progress wrong_layer 96 / 144
+matrix complete 5040 records
+R1 verdict {"checks": {"all_arm_slopes_positive": false, "compliance_abs_cos_lt_0_30": true, "endpoint_effect_ge_1": false, "neutral_kl_lt_0_10": true, "no_conflict_drop_lt_0_50": true, "orthogonalized_retention_ge_0_70": true, "refusal_abs_cos_lt_0_30": true}, "ordinal_compliance_cosine": 0.06626360321400794, "ordinal_refusal_cosine": 0.07460983326836318, "orthogonalized_retention": 0.9674796747967485, "passes": false}
+DONE elapsed=195s
