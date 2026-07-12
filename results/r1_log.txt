@@ -1,19 +1,36 @@
 model loaded 24 layers
 role activations (500, 2880)
-FATAL:
-Traceback (most recent call last):
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 313, in <module>
-    main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 272, in main
-    centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
-                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 124, in _directions
-    refusal = mean_difference(harmful, harmless)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 43, in mean_difference
-    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
-    raise ValueError("direction has zero or non-finite norm")
-ValueError: direction has zero or non-finite norm
-
+direction cos ordinal/compliance 0.06626360321400794
+direction cos ordinal/refusal -0.07460983326836318
+suite cases 144 conflicts 72
+matrix ordinal scale 56.5134
+matrix progress ordinal 0 / 144
+matrix progress ordinal 48 / 144
+matrix progress ordinal 96 / 144
+matrix pc1 scale 293.4848
+matrix progress pc1 0 / 144
+matrix progress pc1 48 / 144
+matrix progress pc1 96 / 144
+matrix ordinal_orthogonalized scale 56.0388
+matrix progress ordinal_orthogonalized 0 / 144
+matrix progress ordinal_orthogonalized 48 / 144
+matrix progress ordinal_orthogonalized 96 / 144
+matrix compliance scale 59.5362
+matrix progress compliance 0 / 144
+matrix progress compliance 48 / 144
+matrix progress compliance 96 / 144
+matrix refusal scale 46.3247
+matrix progress refusal 0 / 144
+matrix progress refusal 48 / 144
+matrix progress refusal 96 / 144
+matrix random scale 16.0411
+matrix progress random 0 / 144
+matrix progress random 48 / 144
+matrix progress random 96 / 144
+matrix wrong_layer scale 56.5134
+matrix progress wrong_layer 0 / 144
+matrix progress wrong_layer 48 / 144
+matrix progress wrong_layer 96 / 144
+matrix complete 5040 records
+R1 verdict {"checks": {"all_arm_slopes_positive": false, "compliance_abs_cos_lt_0_30": true, "endpoint_effect_ge_1": false, "neutral_kl_lt_0_10": true, "no_conflict_drop_lt_0_50": true, "orthogonalized_retention_ge_0_70": true, "refusal_abs_cos_lt_0_30": true}, "ordinal_compliance_cosine": 0.06626360321400794, "ordinal_refusal_cosine": 0.07460983326836318, "orthogonalized_retention": 0.9674796747967485, "passes": false}
+DONE elapsed=195s
