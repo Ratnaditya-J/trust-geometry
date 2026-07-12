@@ -71,6 +71,9 @@ def main():
     except Exception as e:
         hb("GPU_ERR", repr(e)[:100])
     # deps (torch already present in image)
+    subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y",
+                    "--break-system-packages", "torchvision"],
+                   capture_output=True, text=True)
     pip = [sys.executable, "-m", "pip", "install", "-q", "--break-system-packages",
            "--ignore-installed", "cryptography",
            "transformers>=4.56.0", "accelerate>=1.0.0", "huggingface_hub>=0.25",
