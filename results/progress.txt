@@ -1,9 +1,7 @@
 stage=R1
-elapsed=127s
+elapsed=141s
 
-...pc1 96 / 144
-matrix ordinal_orthogonalized scale 56.0388
-matrix progress ordinal_orthogonalized 0 / 144
+...ogress ordinal_orthogonalized 0 / 144
 matrix progress ordinal_orthogonalized 48 / 144
 matrix progress ordinal_orthogonalized 96 / 144
 matrix compliance scale 59.5362
@@ -12,3 +10,5 @@ matrix progress compliance 48 / 144
 matrix progress compliance 96 / 144
 matrix refusal scale 46.3247
 matrix progress refusal 0 / 144
+matrix progress refusal 48 / 144
+matrix progress refusal 96 / 144
