@@ -1,6 +1,7 @@
 [transformers] `torch_dtype` is deprecated! Use `dtype` instead!
 [transformers] MXFP4 quantization requires the `kernels` package: `pip install kernels>=0.12.0`. We will default to dequantizing the model to bf16.
-Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 1/411 [00:00<01:35,  4.28it/s]Loading weights:   1%|          | 5/411 [00:00<00:40,  9.91it/s]Loading weights:   2%|▏         | 7/411 [00:00<00:37, 10.68it/s]Loading weights:   5%|▌         | 22/411 [00:00<00:11, 32.84it/s]Loading weights:   6%|▋         | 26/411 [00:01<00:12, 30.22it/s]Loading weights:   9%|▉         | 39/411 [00:01<00:08, 44.78it/s]Loading weights:  11%|█         | 44/411 [00:01<00:08, 41.76it/s]Loading weights:  14%|█▎        | 56/411 [00:01<00:06, 51.01it/s]Loading weights:  15%|█▌        | 62/411 [00:01<00:07, 45.64it/s]Loading weights:  18%|█▊        | 73/411 [00:01<00:06, 54.80it/s]Loading weights:  19%|█▉        | 79/411 [00:02<00:07, 45.85it/s]Loading weights:  22%|██▏       | 90/411 [00:02<00:05, 53.59it/s]Loading weights:  43%|████▎     | 175/411 [00:02<00:01, 218.42it/s]Loading weights:  63%|██████▎   | 260/411 [00:02<00:00, 358.76it/s]Loading weights:  84%|████████▍ | 345/411 [00:02<00:00, 473.15it/s]Loading weights: 100%|██████████| 411/411 [00:02<00:00, 157.10it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:08<00:16,  8.21s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:12<00:06,  6.14s/it]Fetching 3 files: 100%|██████████| 3/3 [00:12<00:00,  4.30s/it]
+Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 2/411 [00:00<00:50,  8.18it/s]Loading weights:   1%|          | 5/411 [00:00<00:35, 11.41it/s]Loading weights:   2%|▏         | 7/411 [00:00<00:38, 10.38it/s]Loading weights:   5%|▌         | 22/411 [00:00<00:10, 37.65it/s]Loading weights:   7%|▋         | 27/411 [00:00<00:10, 35.05it/s]Loading weights:   9%|▉         | 39/411 [00:01<00:07, 49.26it/s]Loading weights:  11%|█         | 45/411 [00:01<00:07, 46.12it/s]Loading weights:  14%|█▎        | 56/411 [00:01<00:06, 53.79it/s]Loading weights:  15%|█▌        | 62/411 [00:01<00:06, 50.71it/s]Loading weights:  18%|█▊        | 73/411 [00:01<00:05, 57.44it/s]Loading weights:  19%|█▉        | 79/411 [00:01<00:06, 55.17it/s]Loading weights:  22%|██▏       | 90/411 [00:01<00:05, 63.77it/s]Loading weights:  30%|███       | 124/411 [00:02<00:02, 125.57it/s]Loading weights:  51%|█████     | 209/411 [00:02<00:00, 301.78it/s]Loading weights:  72%|███████▏  | 294/411 [00:02<00:00, 438.59it/s]Loading weights:  92%|█████████▏| 379/411 [00:02<00:00, 535.48it/s]Loading weights: 100%|██████████| 411/411 [00:02<00:00, 167.96it/s]
 model loaded 24 layers
 role activations (500, 2880)
 FATAL:
@@ -10,13 +11,15 @@ Traceback (most recent call last):
   File "/workspace/trust-geometry/scripts/run_r1.py", line 272, in main
     centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 122, in _directions
-    harmless = _last_prompt_activations(tok, model, [pair[0] for pair in HARMFUL_HARMLESS])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 77, in _last_prompt_activations
-    ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: too many dimensions 'str'
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 124, in _directions
+    refusal = mean_difference(harmful, harmless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 43, in mean_difference
+    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
+    raise ValueError("direction has zero or non-finite norm")
+ValueError: direction has zero or non-finite norm
 
 Traceback (most recent call last):
   File "/workspace/trust-geometry/scripts/run_r1.py", line 313, in <module>
@@ -24,10 +27,12 @@ Traceback (most recent call last):
   File "/workspace/trust-geometry/scripts/run_r1.py", line 272, in main
     centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 122, in _directions
-    harmless = _last_prompt_activations(tok, model, [pair[0] for pair in HARMFUL_HARMLESS])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 77, in _last_prompt_activations
-    ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: too many dimensions 'str'
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 124, in _directions
+    refusal = mean_difference(harmful, harmless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 43, in mean_difference
+    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
+    raise ValueError("direction has zero or non-finite norm")
+ValueError: direction has zero or non-finite norm
