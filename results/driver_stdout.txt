@@ -1,63 +1,177 @@
 [transformers] `torch_dtype` is deprecated! Use `dtype` instead!
-/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:188: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /__w/pytorch/pytorch/c10/cuda/CUDAFunctions.cpp:119.)
-  return torch._C._cuda_getDeviceCount() > 0
-[transformers] MXFP4 quantization is only supported on GPUs with compute capability >= 7.5 (e.g T4, A100, L4, H100, or B200) or XPUs (e.g Intel® Data Center GPU Max Series). We will default to dequantizing the model to bf16.
-Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:13<00:26, 13.23s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:13<00:05,  5.83s/it]Fetching 3 files: 100%|██████████| 3/3 [00:13<00:00,  4.63s/it]
+[transformers] MXFP4 quantization requires the `kernels` package: `pip install kernels>=0.12.0`. We will default to dequantizing the model to bf16.
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:12<00:25, 12.75s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:14<00:06,  6.05s/it]Fetching 3 files: 100%|██████████| 3/3 [00:14<00:00,  4.71s/it]
+Loading weights:   0%|          | 0/411 [00:00<?, ?it/s]Loading weights:   0%|          | 1/411 [00:00<02:34,  2.65it/s]Loading weights:   1%|          | 5/411 [00:00<00:44,  9.05it/s]Loading weights:   2%|▏         | 7/411 [00:00<00:42,  9.43it/s]Loading weights:   5%|▌         | 22/411 [00:01<00:14, 26.79it/s]Loading weights:   6%|▌         | 25/411 [00:01<00:19, 20.27it/s]Loading weights:   9%|▉         | 39/411 [00:01<00:10, 34.83it/s]Loading weights:  11%|█         | 44/411 [00:01<00:14, 26.14it/s]Loading weights:  14%|█▎        | 56/411 [00:02<00:10, 33.93it/s]Loading weights:  15%|█▍        | 60/411 [00:02<00:13, 26.48it/s]Loading weights:  18%|█▊        | 73/411 [00:02<00:09, 37.12it/s]Loading weights:  19%|█▉        | 78/411 [00:02<00:11, 29.42it/s]Loading weights:  22%|██▏       | 90/411 [00:03<00:11, 29.10it/s]Loading weights:  23%|██▎       | 94/411 [00:03<00:12, 25.04it/s]Loading weights:  26%|██▌       | 107/411 [00:03<00:09, 30.55it/s]Loading weights:  27%|██▋       | 111/411 [00:04<00:11, 26.26it/s]Loading weights:  30%|███       | 124/411 [00:04<00:08, 33.77it/s]Loading weights:  38%|███▊      | 158/411 [00:04<00:03, 72.43it/s]Loading weights:  47%|████▋     | 192/411 [00:04<00:02, 106.36it/s]Loading weights:  55%|█████▍    | 226/411 [00:04<00:01, 135.32it/s]Loading weights:  63%|██████▎   | 259/411 [00:05<00:00, 171.39it/s]Loading weights:  68%|██████▊   | 281/411 [00:05<00:00, 164.81it/s]Loading weights:  76%|███████▌  | 311/411 [00:05<00:00, 184.32it/s]Loading weights:  81%|████████  | 332/411 [00:05<00:00, 190.07it/s]Loading weights:  88%|████████▊ | 362/411 [00:05<00:00, 205.09it/s]Loading weights:  93%|█████████▎| 384/411 [00:13<00:02,  9.94it/s] Loading weights:  97%|█████████▋| 400/411 [00:17<00:01,  7.48it/s]Loading weights: 100%|██████████| 411/411 [00:17<00:00, 23.11it/s]
+model loaded 24 layers
 FATAL:
 Traceback (most recent call last):
   File "/workspace/trust-geometry/scripts/run_r1.py", line 316, in <module>
     main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 271, in main
-    tok, model = load(token=os.environ.get("HF_TOKEN"))
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/extract.py", line 23, in load
-    model = AutoModelForCausalLM.from_pretrained(
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 402, in from_pretrained
-    return model_class.from_pretrained(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 4368, in from_pretrained
-    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
-                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 4448, in _load_pretrained_model
-    caching_allocator_warmup(model, expanded_device_map, load_config.hf_quantizer)
-  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5070, in caching_allocator_warmup
-    free_device_memory, total_device_memory = accelerator_module.mem_get_info(index)
-                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 862, in mem_get_info
-    return torch.cuda.cudart().cudaMemGetInfo(device)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 606, in cudart
-    _lazy_init()
-  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in _lazy_init
-    torch._C._cuda_init()
-RuntimeError: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 273, in main
+    role_acts, labels = _role_activations(tok, model)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 116, in _role_activations
+    means, _ = activations_for(model, seqs, spans, batch_size=16)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/extract.py", line 47, in activations_for
+    out = model(input_ids=ids, attention_mask=attn, output_hidden_states=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/generic.py", line 911, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 653, in forward
+    outputs: MoeModelOutputWithPast = self.model(
+                                      ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/generic.py", line 1040, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/output_capturing.py", line 252, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 494, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1881, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1829, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 390, in forward
+    hidden_states, _ = self.mlp(hidden_states)  # diff with llama: router scores
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 149, in forward
+    hidden_states = self.experts(hidden_states, router_indices, router_scores)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 576, in forward
+    return experts_forward(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 446, in grouped_mm_experts_forward
+    proj_out = _grouped_linear(
+               ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 371, in _grouped_linear
+    out = _grouped_mm(input, weight, offs=offs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 340, in _grouped_mm
+    return torch._grouped_mm(input.to(weight.dtype), weight, offs=offs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Expected all tensors to be on the same device, but got mat2 is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA___grouped_mm)
 
 Traceback (most recent call last):
   File "/workspace/trust-geometry/scripts/run_r1.py", line 316, in <module>
     main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 271, in main
-    tok, model = load(token=os.environ.get("HF_TOKEN"))
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/../src/trust_geometry/extract.py", line 23, in load
-    model = AutoModelForCausalLM.from_pretrained(
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/transformers/models/auto/auto_factory.py", line 402, in from_pretrained
-    return model_class.from_pretrained(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 4368, in from_pretrained
-    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
-                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 4448, in _load_pretrained_model
-    caching_allocator_warmup(model, expanded_device_map, load_config.hf_quantizer)
-  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_utils.py", line 5070, in caching_allocator_warmup
-    free_device_memory, total_device_memory = accelerator_module.mem_get_info(index)
-                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 862, in mem_get_info
-    return torch.cuda.cudart().cudaMemGetInfo(device)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 606, in cudart
-    _lazy_init()
-  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 529, in _lazy_init
-    torch._C._cuda_init()
-RuntimeError: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver.
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 273, in main
+    role_acts, labels = _role_activations(tok, model)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 116, in _role_activations
+    means, _ = activations_for(model, seqs, spans, batch_size=16)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/extract.py", line 47, in activations_for
+    out = model(input_ids=ids, attention_mask=attn, output_hidden_states=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/generic.py", line 911, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 653, in forward
+    outputs: MoeModelOutputWithPast = self.model(
+                                      ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/generic.py", line 1040, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/output_capturing.py", line 252, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 494, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1881, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1829, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 390, in forward
+    hidden_states, _ = self.mlp(hidden_states)  # diff with llama: router scores
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/gpt_oss/modeling_gpt_oss.py", line 149, in forward
+    hidden_states = self.experts(hidden_states, router_indices, router_scores)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 576, in forward
+    return experts_forward(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 446, in grouped_mm_experts_forward
+    proj_out = _grouped_linear(
+               ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 371, in _grouped_linear
+    out = _grouped_mm(input, weight, offs=offs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/moe.py", line 340, in _grouped_mm
+    return torch._grouped_mm(input.to(weight.dtype), weight, offs=offs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Expected all tensors to be on the same device, but got mat2 is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA___grouped_mm)
