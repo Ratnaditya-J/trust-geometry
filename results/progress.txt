@@ -1,5 +1,5 @@
 stage=R1
-elapsed=180s
+elapsed=194s
 
 ...6.3247
 matrix progress refusal 0 / 144
