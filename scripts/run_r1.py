@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from trust_geometry.analysis import HYP_ORDER, ROLES
 from trust_geometry.harmony_roles import build_variants
-from trust_geometry.r1_suite import CODEWORD_CANDIDATES, build_suite, chat_template_ids
+from trust_geometry.r1_suite import CODEWORD_CANDIDATES, build_suite, prompt_ids
 from trust_geometry.steering import (
     cosine,
     mean_difference,
@@ -66,11 +66,7 @@ HARMFUL_HARMLESS = [
 
 
 def _prompt_ids(tok, text):
-    encoded = tok.apply_chat_template(
-        [{"role": "user", "content": text}], add_generation_prompt=True,
-        return_tensors="pt",
-    )
-    return chat_template_ids(encoded)
+    return prompt_ids(tok, text)
 
 
 def _last_prompt_activations(tok, model, prompts):

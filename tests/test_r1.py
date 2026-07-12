@@ -6,7 +6,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from trust_geometry.r1_suite import build_suite, chat_template_ids
+from trust_geometry.r1_suite import build_suite, chat_template_ids, prompt_ids
 from trust_geometry.steering import (
     cosine,
     hidden_index_to_decoder_layer,
@@ -39,6 +39,9 @@ class ChatTemplateTokenizer:
 
     def apply_chat_template(self, *_args, **_kwargs):
         return self.value
+
+    def encode(self, text, add_special_tokens=False):
+        return [ord(ch) for ch in text]
 
 
 class FakeEncoding:
@@ -90,6 +93,9 @@ class SuiteTests(unittest.TestCase):
         self.assertEqual(chat_template_ids(ChatTemplateTokenizer([[1, 2, 3]]).apply_chat_template()), [1, 2, 3])
         self.assertEqual(chat_template_ids(ChatTemplateTokenizer([4, 5, 6]).apply_chat_template()), [4, 5, 6])
         self.assertEqual(chat_template_ids(ChatTemplateTokenizer(FakeEncoding()).apply_chat_template()), [7, 8, 9])
+
+    def test_prompt_ids_encodes_string_chat_template(self):
+        self.assertEqual(prompt_ids(ChatTemplateTokenizer("abc"), "x"), [97, 98, 99])
 
 
 if __name__ == "__main__":

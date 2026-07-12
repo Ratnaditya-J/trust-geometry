@@ -40,6 +40,16 @@ def chat_template_ids(encoded) -> list[int]:
     return list(values)
 
 
+def prompt_ids(tok, text: str) -> list[int]:
+    encoded = tok.apply_chat_template(
+        [{"role": "user", "content": text}], add_generation_prompt=True,
+        return_tensors="pt",
+    )
+    if isinstance(encoded, str):
+        return tok.encode(encoded, add_special_tokens=False)
+    return chat_template_ids(encoded)
+
+
 def _one_token_words(tok) -> list[tuple[str, int]]:
     out = []
     for word in CODEWORD_CANDIDATES:
