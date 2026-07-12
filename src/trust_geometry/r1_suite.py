@@ -47,7 +47,10 @@ def prompt_ids(tok, text: str) -> list[int]:
     )
     if isinstance(encoded, str):
         return tok.encode(encoded, add_special_tokens=False)
-    return chat_template_ids(encoded)
+    ids = chat_template_ids(encoded)
+    if any(isinstance(item, str) for item in ids):
+        return tok.encode("".join(ids), add_special_tokens=False)
+    return ids
 
 
 def _one_token_words(tok) -> list[tuple[str, int]]:

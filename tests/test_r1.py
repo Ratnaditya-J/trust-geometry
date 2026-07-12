@@ -96,6 +96,7 @@ class SuiteTests(unittest.TestCase):
 
     def test_prompt_ids_encodes_string_chat_template(self):
         self.assertEqual(prompt_ids(ChatTemplateTokenizer("abc"), "x"), [97, 98, 99])
+        self.assertEqual(prompt_ids(ChatTemplateTokenizer(["ab", "c"]), "x"), [97, 98, 99])
 
 
 if __name__ == "__main__":
