@@ -7,11 +7,13 @@ Traceback (most recent call last):
   File "/workspace/trust-geometry/scripts/run_r1.py", line 272, in main
     centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 122, in _directions
-    harmless = _last_prompt_activations(tok, model, [pair[0] for pair in HARMFUL_HARMLESS])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 77, in _last_prompt_activations
-    ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: too many dimensions 'str'
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 124, in _directions
+    refusal = mean_difference(harmful, harmless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 43, in mean_difference
+    return unit(np.asarray(positive).mean(0) - np.asarray(negative).mean(0))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/../src/trust_geometry/steering.py", line 12, in unit
+    raise ValueError("direction has zero or non-finite norm")
+ValueError: direction has zero or non-finite norm
 
