@@ -45,6 +45,8 @@ def hb(stage, extra=""):
         print("hb push err", repr(e)[:120], flush=True)
 
 def self_terminate():
+    if os.environ.get("TG_SELF_TERMINATE", "1") in ("0", "false", "False", "no", "NO"):
+        return
     pid = os.environ.get("RUNPOD_POD_ID"); key = os.environ.get("RUNPOD_API_KEY")
     if pid and key:
         try:
