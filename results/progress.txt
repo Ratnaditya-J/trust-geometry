@@ -1,9 +1,4 @@
 stage=R1
 elapsed=12s
 
-...ile "/usr/local/lib/python3.12/dist-packages/torchaudio/_extension/utils.py", line 58, in _load_lib
-    torch.ops.load_library(path)
-  File "/usr/local/lib/python3.12/dist-packages/torch/_ops.py", line 1518, in load_library
-    raise OSError(f"Could not load this library: {path}") from e
-OSError: Could not load this library: /usr/local/lib/python3.12/dist-packages/torchaudio/lib/libtorchaudio.so
-
+...
