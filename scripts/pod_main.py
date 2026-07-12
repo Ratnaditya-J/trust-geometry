@@ -80,7 +80,7 @@ def main():
     hb("CRYPTO_DONE", f"pip_rc={c.returncode} {c.stderr[-200:] if c.returncode else ''}")
     pip = [sys.executable, "-m", "pip", "install", "-q", "--break-system-packages",
            "transformers>=4.56.0", "accelerate>=1.0.0", "huggingface_hub>=0.25",
-           "scikit-learn", "scipy", "numpy", "safetensors", "hf_transfer", "kernels>=0.4.0"]
+           "scikit-learn", "scipy", "numpy", "safetensors", "hf_transfer", "kernels>=0.12.0"]
     r = subprocess.run(pip, capture_output=True, text=True)
     hb("DEPS_DONE", f"pip_rc={r.returncode} {r.stderr[-200:] if r.returncode else ''}")
 
