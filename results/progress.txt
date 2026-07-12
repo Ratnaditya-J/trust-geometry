@@ -1,4 +1,9 @@
 stage=R1
-elapsed=25s
+elapsed=38s
 
-...
+...             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 81, in _last_prompt_activations
+    ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many dimensions 'str'
+
