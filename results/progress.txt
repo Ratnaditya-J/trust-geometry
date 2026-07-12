@@ -1,5 +1,5 @@
 stage=R1
-elapsed=54s
+elapsed=67s
 
 ...model loaded 24 layers
 role activations (500, 2880)
@@ -8,3 +8,5 @@ direction cos ordinal/refusal -0.07460983326836318
 suite cases 144 conflicts 72
 matrix ordinal scale 56.5134
 matrix progress ordinal 0 / 144
+matrix progress ordinal 48 / 144
+matrix progress ordinal 96 / 144
