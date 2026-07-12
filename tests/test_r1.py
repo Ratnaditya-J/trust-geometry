@@ -6,7 +6,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from trust_geometry.r1_suite import build_suite
+from trust_geometry.r1_suite import build_suite, chat_template_ids
 from trust_geometry.steering import (
     cosine,
     hidden_index_to_decoder_layer,
@@ -31,6 +31,18 @@ class FakeTokenizer:
                 self.ids[piece] = len(self.ids) + 1
             out.append(self.ids[piece])
         return out
+
+
+class ChatTemplateTokenizer:
+    def __init__(self, value):
+        self.value = value
+
+    def apply_chat_template(self, *_args, **_kwargs):
+        return self.value
+
+
+class FakeEncoding:
+    ids = [7, 8, 9]
 
 
 class SteeringTests(unittest.TestCase):
@@ -73,6 +85,11 @@ class SuiteTests(unittest.TestCase):
             self.assertLess(start, end)
             self.assertLess(end, len(case.input_ids))
             self.assertNotEqual(case.target_token, case.alternative_token)
+
+    def test_chat_template_ids_accepts_tokenizer_return_shapes(self):
+        self.assertEqual(chat_template_ids(ChatTemplateTokenizer([[1, 2, 3]]).apply_chat_template()), [1, 2, 3])
+        self.assertEqual(chat_template_ids(ChatTemplateTokenizer([4, 5, 6]).apply_chat_template()), [4, 5, 6])
+        self.assertEqual(chat_template_ids(ChatTemplateTokenizer(FakeEncoding()).apply_chat_template()), [7, 8, 9])
 
 
 if __name__ == "__main__":

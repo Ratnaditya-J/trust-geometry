@@ -27,6 +27,19 @@ class ConflictCase:
     conflict: bool
 
 
+def chat_template_ids(encoded) -> list[int]:
+    """Normalize tokenizer chat-template outputs to a flat list of token ids."""
+    if hasattr(encoded, "ids"):
+        return list(encoded.ids)
+    if hasattr(encoded, "tolist"):
+        values = encoded.tolist()
+    else:
+        values = encoded
+    if values and isinstance(values[0], list):
+        return list(values[0])
+    return list(values)
+
+
 def _one_token_words(tok) -> list[tuple[str, int]]:
     out = []
     for word in CODEWORD_CANDIDATES:
