@@ -1,9 +1,7 @@
 stage=R1
-elapsed=167s
+elapsed=180s
 
-...8 / 144
-matrix progress compliance 96 / 144
-matrix refusal scale 46.3247
+...6.3247
 matrix progress refusal 0 / 144
 matrix progress refusal 48 / 144
 matrix progress refusal 96 / 144
@@ -14,3 +12,5 @@ matrix progress random 96 / 144
 matrix wrong_layer scale 56.5134
 matrix progress wrong_layer 0 / 144
 matrix progress wrong_layer 48 / 144
+matrix progress wrong_layer 96 / 144
+matrix complete 5040 records
