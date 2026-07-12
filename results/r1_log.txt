@@ -2,19 +2,16 @@ model loaded 24 layers
 role activations (500, 2880)
 FATAL:
 Traceback (most recent call last):
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 316, in <module>
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 317, in <module>
     main()
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 275, in main
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 276, in main
     centroids, directions, nuisance_checks = _directions(tok, model, role_acts, labels)
                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 125, in _directions
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 126, in _directions
     harmless = _last_prompt_activations(tok, model, [pair[0] for pair in HARMFUL_HARMLESS])
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 80, in _last_prompt_activations
+  File "/workspace/trust-geometry/scripts/run_r1.py", line 81, in _last_prompt_activations
     ids = torch.tensor([_prompt_ids(tok, prompt)], dtype=torch.long, device=model.device)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/trust-geometry/scripts/run_r1.py", line 72, in _prompt_ids
-    )[0].tolist()
-         ^^^^^^
-AttributeError: 'tokenizers.Encoding' object has no attribute 'tolist'
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many dimensions 'str'
 
