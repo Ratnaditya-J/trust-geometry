@@ -1,4 +1,4 @@
 stage=R1
-elapsed=25s
+elapsed=12s
 
 ...
