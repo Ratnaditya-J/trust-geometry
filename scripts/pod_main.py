@@ -72,7 +72,7 @@ def main():
         hb("GPU_ERR", repr(e)[:100])
     # deps (torch already present in image)
     subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y",
-                    "--break-system-packages", "torchvision"],
+                    "--break-system-packages", "torchvision", "torchaudio"],
                    capture_output=True, text=True)
     pip = [sys.executable, "-m", "pip", "install", "-q", "--break-system-packages",
            "--ignore-installed", "cryptography",
