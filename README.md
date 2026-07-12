@@ -17,13 +17,15 @@ pass/fail bright lines.
 - `src/trust_geometry/analysis.py` — probes, gates, and the CLAIM-2 ordered-scale
   geometry battery (pure numpy/sklearn, unit-tested on synthetic ground truth).
 - `scripts/run_r0.py` — R0 + geometry driver (runs on GPU pod).
+- `scripts/run_r1.py` — R1 authority-vs-compliance/refusal causal discriminant.
 - `scripts/pod_bootstrap.sh` — pod entrypoint; pushes results to branch `r0-run`.
 - `data/neutral_c4.jsonl` — fixed 320-sequence C4 neutral-text sample (reproducible).
 
 ## Status
-R0 completed on gpt-oss-20b on 2026-07-11. Role is strongly decodable and the
-controlled centroids are unusually low-dimensional, but the preregistered ordered
-authority scale fails: the 1-D ordered classifier reaches 0.442 versus 0.989 for the
-multinomial probe, and PC1 does not recover the hypothesized role order. See
-[`results/R0_SUMMARY.md`](results/R0_SUMMARY.md). R1's causal authority-vs-compliance
-discriminant is next.
+R0 completed on gpt-oss-20b on 2026-07-11: role is strongly decodable and
+low-dimensional, but the preregistered ordered authority scale fails. R1 completed on
+2026-07-12 and fails the preregistered authority-vs-compliance/refusal discriminant:
+the primary ordinal direction has endpoint effect `0.3203` (< `1.0`) and one negative
+source-pair slope, so the frozen thesis stops here. See
+[`results/R0_SUMMARY.md`](results/R0_SUMMARY.md) and
+[`results/R1_SUMMARY.md`](results/R1_SUMMARY.md).

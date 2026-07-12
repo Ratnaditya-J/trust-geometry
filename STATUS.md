@@ -1,6 +1,6 @@
 # trust-geometry — Project Summary & Status
 
-_Last updated: 2026-07-11 after the first successful GPU run._
+_Last updated: 2026-07-12 after the R1 discriminant run._
 
 ---
 
@@ -90,6 +90,8 @@ successfully on gpt-oss-20b on an H100.
 | `src/trust_geometry/analysis.py` | 5-way role probes (grouped CV), **3 gates** (logit-baseline anti-circularity, random-marker artifact, zero-shot generalization), and the **CLAIM-2 ordered-scale geometry battery** (participation ratio vs random-centroid null, ordinal-vs-multinomial, recovered order) | ✅ unit-tested: correctly labels an ordered-line arrangement "one axis" and orthogonal clusters "bundle" |
 | `src/trust_geometry/extract.py` | GPU activation / logit-feature extraction + real-conversation generation | ✅ GPU-run |
 | `scripts/run_r0.py` | R0 + geometry driver | ✅ completed on gpt-oss-20b |
+| `design/R1_PROTOCOL.md` | Fixed R1 authority-vs-compliance/refusal protocol | ✅ |
+| `src/trust_geometry/r1_suite.py`, `src/trust_geometry/steering.py`, `scripts/run_r1.py` | Matched source-conflict behavioral suite, direction construction, residual steering matrix, KL/coherence checks | ✅ completed on gpt-oss-20b |
 | `scripts/pod_main.py`, `src/trust_geometry/github_io.py` | Pure-Python pod entrypoint + GitHub-API results channel (heartbeats/results, no git/apt on pod) | ✅ written |
 | `prereg/PREREGISTRATION.md` | Frozen thesis, claims, ladder, bright-line pass/fail criteria | ✅ |
 | `README.md` | Overview | ✅ |
@@ -143,22 +145,37 @@ trust axis would be premature. Full metrics and hashes are in
 
 ---
 
-## 6. What's pending
+## 6. R1 result and current stopping point
 
-**Immediate (R1 — the discriminant decision gate):**
-- Build the matched source-conflict/no-conflict behavioral suite.
-- Construct candidate layer-16 directions without relabeling PC1 after seeing the
-  outcome: preregistered ordinal contrast, unsupervised PC1, generic compliance, and
-  refusal, plus random/orthogonal/wrong-layer controls.
-- Test whether steering changes which source wins under conflict while leaving
-  no-conflict task completion and coherence intact.
-- Measure cosine and orthogonalized transfer against compliance and refusal.
-- **Fail R1 -> stop:** the low-dimensional role signal is not authority-specific.
+R1 completed on 2026-07-12 on gpt-oss-20b. The run used the preregistered layer-16
+ordinal authority direction, PC1 diagnostic direction, generic compliance and refusal
+directions, orthogonalized ordinal, random, and wrong-layer controls. Full details are
+in `results/R1_SUMMARY.md`.
+
+**R1 verdict: fail / stop under the preregistration.**
+
+- Primary ordinal endpoint effect: **0.3203**, below the required **1.0**.
+- Arm slopes were not all positive: `system_tool = -0.0044`.
+- Orthogonalized retention passed: **0.9675**.
+- Nuisance cosines passed: `abs(cos ordinal, compliance) = 0.0663`;
+  `abs(cos ordinal, refusal) = 0.0746`.
+- No-conflict preservation passed: median drop **0.0000**.
+- Neutral KL passed: **0.0078**.
+
+Interpretation: the preregistered ordinal authority direction is not established as
+an authority-specific causal mechanism. Its effect is small and not consistent across
+source-pair arms, even though it is cleanly separated from generic compliance/refusal
+and does not damage no-conflict behavior or neutral coherence.
+
+PC1 is interesting but cannot rescue the thesis: it had a larger endpoint effect
+**1.4635** with all positive arm slopes, but its neutral KL was **0.8702**, far above
+the preregistered **0.10** coherence floor, and R0 already rejected calling PC1 the
+ordered authority axis.
 
 **Then the ladder (`prereg/PREREGISTRATION.md`), cheapest-fatal-first:**
 - **R1 — Discriminant (decision gate):** authority ≠ generic compliance/refusal —
   differential per-source reweighting, unmoved no-conflict control, non-collinear with
-  fitted compliance + refusal directions. **Fail → stop.**
+  fitted compliance + refusal directions. **Failed → stop.**
 - **R2:** single-behavior causal footing on injection (steer/ablate, matched controls,
   beat TF-IDF).
 - **R3:** ordered-scale *causal* (monotone steering along the ladder, dose-response).
@@ -167,11 +184,13 @@ trust axis would be premature. Full metrics and hashes are in
 - **R6:** synthesis + mediation of the paper's CoTness→ASR 9%→90% dose-response.
 - **R7:** cross-model replication.
 
-**Biggest not-yet-built component:** the **behavioral suites** for sycophancy,
-jailbreak-compliance, and retrieval over-trust (needed for R4). No repo currently
-elicits/measures these; `exit-friction` is a reusable crossed-design template and RAMP
-points to external jailbreak corpora, but these are net-new builds and are the true gate
-on the unification claim.
+**If continuing despite the preregistered stop:** the next work must be explicitly
+exploratory, not a continuation of the frozen CLAIM-2 thesis. The strongest exploratory
+lead is to understand why PC1 moves conflict choices while badly violating KL/coherence,
+and whether a constrained/ablated PC1-like direction can preserve behavior.
 
-**Infra status:** launch validation and the H100 path are proven. Reuse the HTTP
-status/artifact channel and the `cryptography --ignore-installed` bootstrap repair.
+**Infra status:** the H100 path is proven. The current reliable recipe is RunPod
+cached image `runpod/pytorch:1.0.3-cu1281-torch291-ubuntu2404`, immutable GitHub commit
+archive download, GitHub-API heartbeat/artifact channel, separate `cryptography`
+repair, uninstall incompatible optional `torchvision`/`torchaudio`, and preserve the
+image's Torch install.
