@@ -94,9 +94,12 @@ class SuiteTests(unittest.TestCase):
         self.assertEqual(chat_template_ids(ChatTemplateTokenizer([4, 5, 6]).apply_chat_template()), [4, 5, 6])
         self.assertEqual(chat_template_ids(ChatTemplateTokenizer(FakeEncoding()).apply_chat_template()), [7, 8, 9])
 
-    def test_prompt_ids_encodes_string_chat_template(self):
-        self.assertEqual(prompt_ids(ChatTemplateTokenizer("abc"), "x"), [97, 98, 99])
-        self.assertEqual(prompt_ids(ChatTemplateTokenizer(["ab", "c"]), "x"), [97, 98, 99])
+    def test_prompt_ids_uses_explicit_harmony_prompt(self):
+        ids = prompt_ids(ChatTemplateTokenizer("ignored"), "abc")
+        self.assertIn(ord("a"), ids)
+        self.assertIn(ord("b"), ids)
+        self.assertIn(ord("c"), ids)
+        self.assertEqual(ids[-1], ord(">"))
 
 
 if __name__ == "__main__":

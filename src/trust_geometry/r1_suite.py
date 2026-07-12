@@ -41,16 +41,10 @@ def chat_template_ids(encoded) -> list[int]:
 
 
 def prompt_ids(tok, text: str) -> list[int]:
-    encoded = tok.apply_chat_template(
-        [{"role": "user", "content": text}], add_generation_prompt=True,
-        return_tensors="pt",
+    return tok.encode(
+        f"<|start|>user<|message|>{text}{END}{FINAL_PREFIX}",
+        add_special_tokens=False,
     )
-    if isinstance(encoded, str):
-        return tok.encode(encoded, add_special_tokens=False)
-    ids = chat_template_ids(encoded)
-    if any(isinstance(item, str) for item in ids):
-        return tok.encode("".join(ids), add_special_tokens=False)
-    return ids
 
 
 def _one_token_words(tok) -> list[tuple[str, int]]:
