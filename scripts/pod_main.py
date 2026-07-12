@@ -74,8 +74,11 @@ def main():
     subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y",
                     "--break-system-packages", "torchvision", "torchaudio"],
                    capture_output=True, text=True)
+    crypto = [sys.executable, "-m", "pip", "install", "-q", "--break-system-packages",
+              "--ignore-installed", "cryptography"]
+    c = subprocess.run(crypto, capture_output=True, text=True)
+    hb("CRYPTO_DONE", f"pip_rc={c.returncode} {c.stderr[-200:] if c.returncode else ''}")
     pip = [sys.executable, "-m", "pip", "install", "-q", "--break-system-packages",
-           "--ignore-installed", "cryptography",
            "transformers>=4.56.0", "accelerate>=1.0.0", "huggingface_hub>=0.25",
            "scikit-learn", "scipy", "numpy", "safetensors", "hf_transfer", "kernels>=0.4.0"]
     r = subprocess.run(pip, capture_output=True, text=True)
